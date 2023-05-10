@@ -2,8 +2,9 @@ const express = require('express')
 const { getAllFries, createFry, deleteOneFry, updateOneFry } = require('../controllers')
 const friesRouter = express.Router()
 
-friesRouter.route('/').get(getAllFries).post(createFry)
-friesRouter.route('/:id').delete(deleteOneFry).put(updateOneFry)
+friesRouter.route('/fries').get(getAllFries)
+friesRouter.route('/fries/:id').delete(deleteOneFry).put(updateOneFry)
+friesRouter.route('/createfry').post(createFry)
 
 module.exports = friesRouter
 

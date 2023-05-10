@@ -2,6 +2,7 @@ const FryCollection = require('../models/frySchema.js')
 
 const createFry = async (req, res, next) => {
 try{
+    console.log('createFry triggered')
     const newFry = await FryCollection.create(req.body)
     return res.status(201).send(newFry)
 } catch(error){
@@ -19,7 +20,7 @@ const getAllFries = async (req, res, next) => {
         console.log(error)
         return res.send(500)
     }
-  }
+}
 
 const deleteOneFry = async (req, res, next) => {
     try{
