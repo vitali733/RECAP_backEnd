@@ -1,24 +1,24 @@
 const FryCollection = require('../models/frySchema.js')
+const ErrorStatus = require('../utils/errorStatus.js')
 
 const createFry = async (req, res, next) => {
 try{
     console.log('createFry triggered')
     const newFry = await FryCollection.create(req.body)
+    if(!newFry) throw new ErrorStatus('createFry failed', 500); 
     return res.status(201).send(newFry)
 } catch(error){
-    console.log('error creating new fry in db')
-    console.log(error)
+   next(error)
 }
 }
 
 const getAllFries = async (req, res, next) => {
     try{
         const allFries = await FryCollection.find()
-        return res.send(allFries)
+        if (!allFries) throw new ErrorStatus('No fries found!', 404);
+        return res.json(allFries)
     } catch (error) {
-        console.log('error getting all the fries')
-        console.log(error)
-        return res.send(500)
+        next(error)
     }
 }
 
@@ -29,9 +29,7 @@ const deleteOneFry = async (req, res, next) => {
         console.log('Fry has been deleted: ' + id)
         return res.json(deletedFry)
     } catch (error) {
-        console.log('error with deleteOne')
-        console.log(error)
-        return res.send(500)
+        next(error)
     }
   }
 
@@ -47,9 +45,7 @@ const updateOneFry = async (req, res, next) => {
         console.log('Fry has been updated: ' + id)
         return res.json(updatedFry)
     } catch (error) {
-        console.log('error with upDateOneFry')
-        console.log(error)
-        return res.send(500)
+       next(error)
     }
   }
 
